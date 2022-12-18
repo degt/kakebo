@@ -1,56 +1,28 @@
 <template>
-  <div>
-    <pre>Entry: {{ entry }}</pre>
-
-    <div v-for="{ name, value, type } in items" :key="name">
-      <pre>
-name: {{ name }}
-value: {{ value }}
-type: {{ type }}
-       </pre
-      >
-    </div>
-
-    <form action="" @submit.prevent="add({ entry })">
-      <label for="">Name</label>
-      <input type="text" v-model="entry.name" />
-      <label for="">Value</label>
-      <input type="text" v-model="entry.value" />
-      <label for="">Type</label>
-      <input type="text" v-model="entry.type" />
-      <button>Add</button>
-    </form>
-  </div>
+  <form class="grid" action="" @submit.prevent="add({ entry })">
+    <UIInput label="Name" v-model="entry.name" />
+    <UIInput label="Value" type="number" v-model="entry.value" />
+    <UISelect label="Type" v-model="entry.type" :items="types" />
+    <UIButton />
+  </form>
 </template>
 
 <script setup>
-import { ref } from "vue";
+// import { ref } from "vue";
 import { useEntriesStore } from "@/stores/entries";
+import UIInput from "../base/UIInput.vue";
+import UISelect from "../base/UISelect.vue";
+import UIButton from "../base/UIButton.vue";
 
-console.log("hello script setup");
-const entry = ref({});
+// const entry = ref({});
 const entriesStore = useEntriesStore();
-const { items, add } = entriesStore;
-
-// function addEntry() {
-//   console.log(entry, entry.value);
-//   entriesStore.add({ entry: entry.value });
-//   //   entry = {};
-//   //   console.log("addEntry", ;
-// }
-
-// export default {
-//   data() {
-//     return {
-//       entry: {},
-//     };
-//   },
-//   methods: {
-//     add() {
-//       console.log(this);
-//     },
-//   },
-// };
+const { entry, types, add } = entriesStore;
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.grid {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+}
+</style>
